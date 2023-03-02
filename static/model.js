@@ -81,7 +81,6 @@ class CupcakeList {
         // send delete request to API
         const response = await axios.patch(`/api/cupcakes/${id}/edit`, cupcake);
 
-        
         return response.data;
     }
 }

@@ -1,8 +1,10 @@
 
 
 const $submitForm = $("#submit-form");
+const $editForm = $("#edit-form");
 const $allCupcakesList = $("#all-cupcakes-list");
 
+console.log("hello");
 // This is the global list of the cupcakes, an instance of cupcakeList
 let cupcakeList;
 
@@ -20,10 +22,33 @@ async function submitNewCupcake(evt) {
 
     $submitForm.trigger("reset");
 
-    putCupcakesOnPage();
+    window.location.reload();
+    // putCupcakesOnPage();
   }
   
 $submitForm.on("submit", submitNewCupcake);
+
+/** Handle edit button in edit form. */
+async function editCupcake(evt) {
+    console.log("editCupcake", evt);
+    evt.preventDefault();
+  
+    const flavor = $("#flavor").val();
+    const size = $("#size").val();
+    const rating = $("#rating").val();
+    const image = $("#image").val();
+    const id = $editForm.attr('data-id');
+    
+    const newCupcake = await cupcakeList.updateCupcake(id, {flavor, size, rating, image});
+
+    console.log('newCupcake', newCupcake);
+    $editForm.trigger("reset");
+
+    window.location.assign('/');
+    // putCupcakesOnPage();
+}
+  
+$editForm.on("submit", editCupcake);
 
 
 /** Handle delete button for deleting particular cupcake */
